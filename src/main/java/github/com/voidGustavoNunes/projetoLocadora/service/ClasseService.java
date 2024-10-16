@@ -5,11 +5,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+import github.com.voidGustavoNunes.projetoLocadora.model.Ator;
 import github.com.voidGustavoNunes.projetoLocadora.model.Classe;
+import github.com.voidGustavoNunes.projetoLocadora.repository.AtorRepository;
 import github.com.voidGustavoNunes.projetoLocadora.repository.ClasseRepository;
 
 @Service
-public class ClasseService {
+public class ClasseService extends GenericServiceImpl<Classe, ClasseRepository >{
+
+    protected ClasseService(ClasseRepository repository) {
+        super(repository);
+    }
 
     @Autowired
     private ClasseRepository classeRepository;

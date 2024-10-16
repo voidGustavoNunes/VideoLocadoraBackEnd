@@ -8,7 +8,15 @@ import github.com.voidGustavoNunes.projetoLocadora.model.Ator;
 import github.com.voidGustavoNunes.projetoLocadora.repository.AtorRepository;
 
 @Service
-public class AtorService {
+public class AtorService extends GenericServiceImpl<Ator, AtorRepository >{
+
+    
+    protected AtorService(AtorRepository repository) {
+        super(repository);
+        //TODO Auto-generated constructor stub
+    }
+
+
     @Autowired
     private AtorRepository atorRepository;
 

@@ -5,12 +5,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+import github.com.voidGustavoNunes.projetoLocadora.model.Ator;
 import github.com.voidGustavoNunes.projetoLocadora.model.Diretor;
+import github.com.voidGustavoNunes.projetoLocadora.repository.AtorRepository;
 import github.com.voidGustavoNunes.projetoLocadora.repository.DiretorRepository;
 
 @Service
-public class DiretorService{
+public class DiretorService extends GenericServiceImpl<Diretor, DiretorRepository >{
     
+    protected DiretorService(DiretorRepository repository) {
+        super(repository);
+    }
+
     @Autowired
     private DiretorRepository diretorRepository;
 
