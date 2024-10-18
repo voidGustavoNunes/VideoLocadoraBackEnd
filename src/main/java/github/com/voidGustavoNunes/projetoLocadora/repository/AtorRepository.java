@@ -11,9 +11,11 @@ import github.com.voidGustavoNunes.projetoLocadora.model.Ator;
 
 @Repository
 @CrossOrigin("http://localhost:4200")
-@RepositoryRestResource(collectionResourceRel = "ator", path="atores")
+@RepositoryRestResource(collectionResourceRel = "ator", path="atores", exported = false)
 public interface AtorRepository extends JpaRepository<Ator, Long>{
 
     // Método que retorna todos os atores em ordem alfabética
     List<Ator> findAll(Sort sort);
+
+    boolean existsByNome(String nome);
 }

@@ -13,9 +13,11 @@ import java.util.List;
 
 @Repository
 @CrossOrigin("http://localhost:4200")
-@RepositoryRestResource(collectionResourceRel = "classe", path="classes")
+@RepositoryRestResource(collectionResourceRel = "classe", path="classes", exported = false)
 public interface ClasseRepository extends JpaRepository<Classe, Long>{
 
 
     List<Classe> findAll(Sort sort);
+    boolean existsByNome(String nome);
+
 }

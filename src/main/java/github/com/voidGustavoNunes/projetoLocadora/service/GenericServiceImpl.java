@@ -9,7 +9,6 @@ import jakarta.validation.constraints.Positive;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.UUID;
 
 public abstract class GenericServiceImpl<T, R extends JpaRepository<T, Long>> implements GenericService<T> {
 
@@ -31,6 +30,7 @@ public abstract class GenericServiceImpl<T, R extends JpaRepository<T, Long>> im
 
     @Override
     public T criar(@Valid @NotNull T entity) {
+        this.saveValidation(entity);
         return repository.save(entity);
     }
 
@@ -41,6 +41,7 @@ public abstract class GenericServiceImpl<T, R extends JpaRepository<T, Long>> im
 
     @Override
     public T atualizar(@NotNull @Positive Long id, @Valid @NotNull T entityAtualizada) {
+        this.saveValidation(entityAtualizada);
         T entityExistente = repository.findById(id)
                 .orElseThrow(() -> new RegistroNotFoundException(id));
         
@@ -63,4 +64,6 @@ public abstract class GenericServiceImpl<T, R extends JpaRepository<T, Long>> im
             throw new RegistroNotFoundException(id);
         }
     }
+
+
 }

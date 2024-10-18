@@ -11,9 +11,11 @@ import github.com.voidGustavoNunes.projetoLocadora.model.Diretor;
 
 @Repository
 @CrossOrigin("http://localhost:4200")
-@RepositoryRestResource(collectionResourceRel = "diretor", path="diretores")
+@RepositoryRestResource(collectionResourceRel = "diretor", path="diretores", exported = false)
 public interface DiretorRepository extends JpaRepository<Diretor, Long>{
     
 
     List<Diretor> findAll(Sort sort);
+
+    boolean existsByNome(String nome);
 }

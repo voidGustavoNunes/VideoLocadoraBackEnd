@@ -8,6 +8,8 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Data
 @Entity
@@ -19,5 +21,7 @@ public class Ator{
     @Column(name="id")
     private Long id;
     
+    @NotNull
+    @Size(min = 1, max = 100)
     private String nome;
 }
