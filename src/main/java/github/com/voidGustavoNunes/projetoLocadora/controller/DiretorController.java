@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import github.com.voidGustavoNunes.projetoLocadora.model.Diretor;
 import github.com.voidGustavoNunes.projetoLocadora.service.DiretorService;
 import github.com.voidGustavoNunes.projetoLocadora.service.GenericService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Validated
@@ -26,6 +27,7 @@ public class DiretorController extends GenericController<Diretor>{
     @Autowired
     private DiretorService diretorService;
 
+    @Operation(summary = "Diretores Ordenados", description = "Método que gera uma lista de diretores e os ordena em ordem alfabética")
     // Endpoint que retorna os diretores em ordem alfabética
     @GetMapping("/diretores")
     public List<Diretor> getDiretoresOrdenados() {

@@ -1,10 +1,13 @@
 package github.com.voidGustavoNunes.projetoLocadora.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
 import jakarta.persistence.Table;
@@ -21,7 +24,10 @@ public class Ator{
     @Column(name="id")
     private Long id;
     
-    @NotNull
+    @NotNull(message = "O nome não pode ser menos que 1 caractere e maior que 100.")
     @Size(min = 1, max = 100)
     private String nome;
+
+    @ManyToMany(mappedBy = "atores")
+    private List<Titulo> titulos;
 }

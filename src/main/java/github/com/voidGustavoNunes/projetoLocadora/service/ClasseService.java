@@ -2,6 +2,8 @@ package github.com.voidGustavoNunes.projetoLocadora.service;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 
 import github.com.voidGustavoNunes.exception.RegistroNotFoundException;
@@ -41,6 +43,10 @@ public class ClasseService extends GenericServiceImpl<Classe, ClasseRepository >
             if (repository.existsByNome(entity.getNome())) {
                 throw new IllegalArgumentException("Já existe uma classe com o nome: " + entity.getNome());
             }
+        }
+        // Validação para garantir que a dataDevolucao seja hoje ou uma data futura
+        if (entity.getDataDevolucao() != null && entity.getDataDevolucao().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("A data de devolução deve ser hoje ou uma data futura.");
         }
     }
 }

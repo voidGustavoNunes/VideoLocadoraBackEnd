@@ -20,7 +20,7 @@ public class Diretor{
     @Column(name="id")
     private Long id;
 
-    @NotNull
+    @NotNull(message = "O nome não pode ser menos que 1 caractere e maior que 100.")
     @Size(min = 1, max = 100)
     private String nome;
 }

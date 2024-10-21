@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -23,7 +24,8 @@ public class Classe{
     private Long id;
 
 
-    @NotNull
+    @NotNull(message = "O nome não pode ser menos que 1 caractere e maior que 100.")
+    @Size(min = 1, max = 100)
     private String nome;
 
     private LocalDate dataDevolucao;

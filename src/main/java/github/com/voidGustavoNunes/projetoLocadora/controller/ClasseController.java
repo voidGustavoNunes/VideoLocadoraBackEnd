@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import github.com.voidGustavoNunes.projetoLocadora.model.Classe;
 import github.com.voidGustavoNunes.projetoLocadora.service.ClasseService;
 import github.com.voidGustavoNunes.projetoLocadora.service.GenericService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class ClasseController extends GenericController<Classe>{
     @Autowired
     private ClasseService classeService;
 
+    @Operation(summary = "Classes Ordenadas", description = "Método que gera uma lista de classes e os ordena em ordem alfabética")
     @GetMapping("/classes")
     public List<Classe> getClassesOrdenados() {
         return classeService.getAllClassesOrdenados();

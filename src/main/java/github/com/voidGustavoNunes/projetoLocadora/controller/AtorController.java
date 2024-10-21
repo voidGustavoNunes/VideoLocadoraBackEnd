@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import github.com.voidGustavoNunes.projetoLocadora.model.Ator;
 import github.com.voidGustavoNunes.projetoLocadora.service.AtorService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Validated
@@ -26,6 +27,7 @@ public class AtorController extends GenericController<Ator>{
     private AtorService atorService;
 
     // Endpoint que retorna os atores em ordem alfabética
+    @Operation(summary = "Atores Ordenados", description = "Método que gera uma lista de atores e os ordena em ordem alfabética")
     @GetMapping("/atores")
     public List<Ator> getAtoresOrdenados() {
         return atorService.getAllAtoresOrdenados();
