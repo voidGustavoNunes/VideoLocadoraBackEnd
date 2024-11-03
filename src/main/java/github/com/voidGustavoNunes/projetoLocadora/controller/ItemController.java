@@ -11,7 +11,7 @@ import github.com.voidGustavoNunes.projetoLocadora.model.dto.ItemDTO;
 import github.com.voidGustavoNunes.projetoLocadora.repository.TituloRepository;
 import github.com.voidGustavoNunes.projetoLocadora.service.ItemService;
 import jakarta.validation.Valid;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Validated
@@ -26,13 +26,23 @@ public class ItemController {
     private TituloRepository tituloRepository;
 
     @GetMapping
-    public List<Item> listar() {
-        return itemService.listar();
+    public List<ItemDTO> listar() {
+        List<Item> itens = itemService.listar();
+        List<ItemDTO> itensDto = new ArrayList();
+
+        for(Item item: itens){
+            itensDto.add(mapToDTO(item));
+        }
+        return itensDto;
     }
 
     @GetMapping("/{id}")
-    public Item buscarPorId(@PathVariable Long id) {
-        return itemService.buscarPorId(id);
+    public ItemDTO buscarPorId(@PathVariable Long id) {
+        ItemDTO itemDto = new ItemDTO();
+        
+        Item item = itemService.buscarPorId(id);
+        itemDto = mapToDTO(item);
+        return itemDto;
     }
 
     @PostMapping
@@ -66,5 +76,15 @@ public class ItemController {
 
         item.setTipo(itemDTO.getTipo());
         return item;
+    }
+
+    private ItemDTO mapToDTO(Item item){
+        ItemDTO itemDto = new ItemDTO();
+        itemDto.setNumeroSerie(item.getNumeroSerie());
+        itemDto.setDataAquisicao(item.getDataAquisicao());
+        itemDto.setTipo(item.getTipo());
+        itemDto.setTituloId(item.getTitulo().getId());
+
+        return itemDto;
     }
 }
