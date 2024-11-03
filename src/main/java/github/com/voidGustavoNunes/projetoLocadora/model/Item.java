@@ -28,7 +28,7 @@ public class Item {
     private Integer numeroSerie;
 
     @ManyToOne 
-    @JoinColumn(name = "titulo_id")
+    @JoinColumn(name = "titulo_id", nullable = false)
     @NotNull(message = "Tìtulo não pode ser vazio")
     private Titulo titulo;
 

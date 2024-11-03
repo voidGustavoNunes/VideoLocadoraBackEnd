@@ -1,6 +1,9 @@
 package github.com.voidGustavoNunes.projetoLocadora.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,6 +31,7 @@ public class Ator{
     @Size(min = 1, max = 100)
     private String nome;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "atores")
-    private List<Titulo> titulos;
+    private List<Titulo> titulos = new ArrayList<>();;
 }
