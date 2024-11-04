@@ -67,6 +67,7 @@ public class ItemController {
 
     private Item mapToEntity(ItemDTO itemDTO) {
         Item item = new Item();
+        item.setId(itemDTO.getId());
         item.setNumeroSerie(itemDTO.getNumeroSerie());
         item.setDataAquisicao(itemDTO.getDataAquisicao());
 
@@ -80,6 +81,7 @@ public class ItemController {
 
     private ItemDTO mapToDTO(Item item){
         ItemDTO itemDto = new ItemDTO();
+        itemDto.setId(item.getId());
         itemDto.setNumeroSerie(item.getNumeroSerie());
         itemDto.setDataAquisicao(item.getDataAquisicao());
         itemDto.setTipo(item.getTipo());

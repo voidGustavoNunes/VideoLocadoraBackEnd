@@ -10,6 +10,9 @@ import github.com.voidGustavoNunes.projetoLocadora.model.enums.Tipo;
 
 @Data
 public class ItemDTO {
+    @NotNull(message = "ID é obrigatório")
+    private Long id;
+
 
     @NotNull(message = "Número de série é obrigatório")
     private Integer numeroSerie;
