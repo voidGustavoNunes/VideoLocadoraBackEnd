@@ -2,8 +2,11 @@ package github.com.voidGustavoNunes.projetoLocadora.model;
 
 import java.time.LocalDate;
 
+import github.com.voidGustavoNunes.projetoLocadora.model.enums.Sexo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,7 +32,8 @@ public class Dependente {
     private String nome;
 
     @NotNull(message = "O campo sexo não pode ser nulo.")
-    private boolean sexo;
+    @Enumerated(EnumType.STRING)
+    private Sexo sexo;
     
     @NotNull(message = "A data de nascimento é obrigatória.")
     private LocalDate dataNascimento;

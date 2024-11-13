@@ -43,8 +43,8 @@ public class ClienteController extends GenericController<Cliente>{
 
     @PostMapping("/{clienteId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Dependente criarDependente(@PathVariable Long clienteId, @RequestBody @Valid Dependente dependente) {
-        return dependenteService.criarDependenteParaCliente(dependente, clienteId);
+    public List<Dependente> criarDependente(@PathVariable Long clienteId, @RequestBody @Valid List<Dependente> dependente) {
+        return dependenteService.criarDependentesParaCliente(dependente, clienteId);
     }
 
 }

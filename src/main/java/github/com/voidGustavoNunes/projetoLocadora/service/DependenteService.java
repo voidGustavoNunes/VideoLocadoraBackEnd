@@ -20,6 +20,7 @@ public class DependenteService extends GenericServiceImpl<Dependente, Dependente
     @Autowired
     private ClienteService clienteService;
 
+
     protected DependenteService(DependenteRepository repository) {
         super(repository);
     }
@@ -60,13 +61,22 @@ public class DependenteService extends GenericServiceImpl<Dependente, Dependente
     }
 
     @Transactional
-    public Dependente criarDependenteParaCliente(@Valid Dependente dependente, Long clienteId) {
+    public List<Dependente> criarDependentesParaCliente(@Valid List<Dependente> dependentes, Long clienteId) {
         Cliente cliente = clienteService.buscarPorId(clienteId);
-        dependente.setCliente(cliente); // Associa o dependente ao cliente
-        Dependente novoDependente = repository.save(dependente);
+    
+        // Associa cada dependente ao cliente e salva no repositório
+        dependentes.forEach(dependente -> saveValidation(dependente)); //verificar recursividade
+        dependentes.forEach(dependente -> dependente.setCliente(cliente));
         
-        clienteService.adicionarDependente(clienteId, novoDependente); // Chama a lógica de adicionar dependente
-        return novoDependente;
+        List<Dependente> novosDependentes = repository.saveAll(dependentes);
+
+
+    
+        // Adiciona os dependentes ao cliente usando o serviço
+        clienteService.adicionarDependentes(clienteId, novosDependentes);
+    
+        return novosDependentes;
     }
+    
     
 }
