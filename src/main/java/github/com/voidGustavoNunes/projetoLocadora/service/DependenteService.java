@@ -8,11 +8,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import github.com.voidGustavoNunes.exception.RegistroNotFoundException;
-import github.com.voidGustavoNunes.projetoLocadora.model.Cliente;
 import github.com.voidGustavoNunes.projetoLocadora.model.Dependente;
+import github.com.voidGustavoNunes.projetoLocadora.model.Socio;
 import github.com.voidGustavoNunes.projetoLocadora.repository.DependenteRepository;
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 
 @Service
 public class DependenteService extends GenericServiceImpl<Dependente, DependenteRepository>{
@@ -56,27 +54,36 @@ public class DependenteService extends GenericServiceImpl<Dependente, Dependente
                 throw new IllegalArgumentException("A data de nascimento não pode ser no futuro.");
             }
         }
-
-
+        // Valida associação ao sócio
+        if (entity.getSocio() == null) {
+            throw new IllegalArgumentException("O dependente deve estar associado a um sócio.");
+        }
+        validarInclusao(entity.getSocio());
     }
 
-    @Transactional
-    public List<Dependente> criarDependentesParaCliente(@Valid List<Dependente> dependentes, Long clienteId) {
-        Cliente cliente = clienteService.buscarPorId(clienteId);
+    public void validarInclusao(Socio socio) {
+        if (socio.getDependentes().size() >= 3) {
+            throw new IllegalArgumentException("Sócio já possui três dependentes ativos.");
+        }
+    }
+
+    // @Transactional
+    // public List<Dependente> criarDependentesParaCliente(@Valid List<Dependente> dependentes, Long clienteId) {
+    //     Cliente cliente = clienteService.buscarPorId(clienteId);
     
-        // Associa cada dependente ao cliente e salva no repositório
-        dependentes.forEach(dependente -> saveValidation(dependente)); //verificar recursividade
-        dependentes.forEach(dependente -> dependente.setCliente(cliente));
+    //     // Associa cada dependente ao cliente e salva no repositório
+    //     dependentes.forEach(dependente -> saveValidation(dependente)); //verificar recursividade
+    //     dependentes.forEach(dependente -> dependente.setCliente(cliente));
         
-        List<Dependente> novosDependentes = repository.saveAll(dependentes);
+    //     List<Dependente> novosDependentes = repository.saveAll(dependentes);
 
 
     
-        // Adiciona os dependentes ao cliente usando o serviço
-        clienteService.adicionarDependentes(clienteId, novosDependentes);
+    //     // Adiciona os dependentes ao cliente usando o serviço
+    //     clienteService.adicionarDependentes(clienteId, novosDependentes);
     
-        return novosDependentes;
-    }
+    //     return novosDependentes;
+    // }
     
     
 }

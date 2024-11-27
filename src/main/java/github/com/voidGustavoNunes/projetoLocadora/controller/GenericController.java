@@ -19,6 +19,11 @@ public abstract class GenericController<T> {
 
     private final GenericService<T> genericService;
 
+
+    public GenericService<T> getGenericService() {
+        return genericService;
+    }
+
     protected GenericController(GenericService<T> genericService) {
         this.genericService = genericService;
     }

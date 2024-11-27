@@ -17,4 +17,5 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>{
     
     List<Cliente> findAll(Sort sort);
     boolean existsByNome(String nome);
+
 }

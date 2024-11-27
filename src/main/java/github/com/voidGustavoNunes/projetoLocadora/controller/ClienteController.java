@@ -3,17 +3,14 @@ package github.com.voidGustavoNunes.projetoLocadora.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 
 import github.com.voidGustavoNunes.projetoLocadora.model.Cliente;
-import github.com.voidGustavoNunes.projetoLocadora.model.Dependente;
 import github.com.voidGustavoNunes.projetoLocadora.service.ClienteService;
 import github.com.voidGustavoNunes.projetoLocadora.service.DependenteService;
 import github.com.voidGustavoNunes.projetoLocadora.service.GenericService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -41,10 +38,10 @@ public class ClienteController extends GenericController<Cliente>{
         return clienteService.getAllClientesOrdenados();
     }
 
-    @PostMapping("/{clienteId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public List<Dependente> criarDependente(@PathVariable Long clienteId, @RequestBody @Valid List<Dependente> dependente) {
-        return dependenteService.criarDependentesParaCliente(dependente, clienteId);
-    }
+    // @PostMapping("/{clienteId}")
+    // @ResponseStatus(HttpStatus.CREATED)
+    // public List<Dependente> criarDependente(@PathVariable Long clienteId, @RequestBody @Valid List<Dependente> dependente) {
+    //     return dependenteService.criarDependentesParaCliente(dependente, clienteId);
+    // }
 
 }

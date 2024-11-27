@@ -3,6 +3,7 @@ package github.com.voidGustavoNunes.projetoLocadora.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import github.com.voidGustavoNunes.exception.RegistroNotFoundException;
 import github.com.voidGustavoNunes.projetoLocadora.model.Cliente;
 import github.com.voidGustavoNunes.projetoLocadora.model.Dependente;
 import github.com.voidGustavoNunes.projetoLocadora.repository.ClienteRepository;
+import github.com.voidGustavoNunes.projetoLocadora.repository.LocacaoRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +19,9 @@ import jakarta.validation.constraints.Positive;
 
 @Service
 public class ClienteService extends GenericServiceImpl<Cliente, ClienteRepository>{
+
+    @Autowired
+    LocacaoRepository locacaoRepository;
 
     protected ClienteService(ClienteRepository repository) {
         super(repository);
@@ -54,22 +59,31 @@ public class ClienteService extends GenericServiceImpl<Cliente, ClienteRepositor
         }
     }
 
-    @Transactional
-    public Cliente adicionarDependentes(@NotNull @Positive Long clienteId, @Valid @NotNull List<Dependente> dependentes) {
-        Cliente cliente = repository.findById(clienteId)
-                .orElseThrow(() -> new RegistroNotFoundException(clienteId));
+    // @Transactional
+    // public Cliente adicionarDependentes(@NotNull @Positive Long clienteId, @Valid @NotNull List<Dependente> dependentes) {
+    //     Cliente cliente = repository.findById(clienteId)
+    //             .orElseThrow(() -> new RegistroNotFoundException(clienteId));
     
-        for (Dependente dependente : dependentes) {
-            dependente.setCliente(cliente);  // Associa o dependente ao cliente
+    //     for (Dependente dependente : dependentes) {
+    //         dependente.setCliente(cliente);  // Associa o dependente ao cliente
             
-            if (cliente.getDependentes().contains(dependente)) {
-                throw new IllegalArgumentException("O dependente " + dependente.getNome() + " já está associado a este cliente.");
-            }
+    //         if (cliente.getDependentes().contains(dependente)) {
+    //             throw new IllegalArgumentException("O dependente " + dependente.getNome() + " já está associado a este cliente.");
+    //         }
             
-            cliente.getDependentes().add(dependente);  // Adiciona o dependente à lista do cliente
+    //         cliente.getDependentes().add(dependente);  // Adiciona o dependente à lista do cliente
+    //     }
+    
+    //     return repository.save(cliente);
+    // }
+
+    @Override
+    public void excluir(@NotNull @Positive Long id) {
+        if (locacaoRepository.findByClienteId(id)) {
+            throw new IllegalStateException("Não é possível excluir cliente com locações.");
+        }else{
+            repository.delete(this.repository.findById(id).orElseThrow(() -> new RegistroNotFoundException(id)));
         }
-    
-        return repository.save(cliente);
     }
     
     
