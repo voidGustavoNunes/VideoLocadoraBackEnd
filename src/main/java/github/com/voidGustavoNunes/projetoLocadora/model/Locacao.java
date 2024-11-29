@@ -1,5 +1,6 @@
 package github.com.voidGustavoNunes.projetoLocadora.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import github.com.voidGustavoNunes.projetoLocadora.model.enums.StatusLocacao;
@@ -43,6 +44,9 @@ public class Locacao {
 
     @Column(name = "data_devolucao_efetiva")
     private LocalDate dataDevolucaoEfetiva;
+
+    @Column(name = "valor", nullable = false)
+    private BigDecimal valor;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)

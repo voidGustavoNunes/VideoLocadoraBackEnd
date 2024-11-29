@@ -1,5 +1,6 @@
 package github.com.voidGustavoNunes.projetoLocadora.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +99,8 @@ public class LocacaoService extends GenericServiceImpl<Locacao, LocacaoRepositor
         // Define a data de devolução prevista com base nos dias restantes
         var dataDevolucaoPrevista = dataAtual.plusDays(diasRestantes);
 
+        BigDecimal valorAlocacao = classe.getValor();
+
         // Cria e salva a locação
         Locacao locacao = new Locacao();
         locacao.setCliente(cliente);
@@ -105,6 +108,7 @@ public class LocacaoService extends GenericServiceImpl<Locacao, LocacaoRepositor
         locacao.setDataLocacao(dataAtual);
         locacao.setDataDevolucaoPrevista(dataDevolucaoPrevista);
         locacao.setStatus(StatusLocacao.ABERTA);
+        locacao.setValor(valorAlocacao);
 
         return locacao;
     }
