@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import github.com.voidGustavoNunes.exception.RegistroNotFoundException;
+import github.com.voidGustavoNunes.projetoLocadora.model.Cliente;
 import github.com.voidGustavoNunes.projetoLocadora.model.Item;
 import github.com.voidGustavoNunes.projetoLocadora.model.Titulo;
 import github.com.voidGustavoNunes.projetoLocadora.model.dto.ItemDTO;
@@ -23,6 +24,10 @@ public class ItemService extends GenericServiceImpl<Item, ItemRepository>{
     protected ItemService(ItemRepository repository) {
             
         super(repository);
+    }
+
+    public List<Item> getAllItems() {
+        return repository.findAll();
     }
 
     public Item criar(ItemDTO itemDTO) {

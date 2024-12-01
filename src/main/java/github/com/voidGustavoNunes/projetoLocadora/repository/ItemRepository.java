@@ -18,6 +18,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @RepositoryRestResource(collectionResourceRel = "item", path="items", exported = false)
 public interface ItemRepository extends JpaRepository<Item, Long>{
     
-    List<Item> findAll(Sort sort);
+    List<Item> findAll();
     boolean existsByTitulo(Titulo titulo);
 }

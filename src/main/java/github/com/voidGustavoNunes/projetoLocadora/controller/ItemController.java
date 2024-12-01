@@ -5,11 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import github.com.voidGustavoNunes.projetoLocadora.model.Cliente;
 import github.com.voidGustavoNunes.projetoLocadora.model.Item;
 import github.com.voidGustavoNunes.projetoLocadora.model.Titulo;
 import github.com.voidGustavoNunes.projetoLocadora.model.dto.ItemDTO;
 import github.com.voidGustavoNunes.projetoLocadora.repository.TituloRepository;
 import github.com.voidGustavoNunes.projetoLocadora.service.ItemService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,5 +90,11 @@ public class ItemController {
         itemDto.setTituloId(item.getTitulo().getId());
 
         return itemDto;
+    }
+
+    @Operation(summary = "Todos os itens", description = "Método que gera uma lista de itens")
+    @GetMapping("/itens")
+    public List<Item> getItens() {
+        return itemService.getAllItems();
     }
 }
