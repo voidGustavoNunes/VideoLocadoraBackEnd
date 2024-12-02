@@ -54,7 +54,7 @@ public class ItemService extends GenericServiceImpl<Item, ItemRepository>{
     public void saveValidation(Item entity) throws RegistroNotFoundException {
 
         if (entity.getDataAquisicao() != null && entity.getDataAquisicao().isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("A data de devolução deve ser hoje ou uma data anterior.");
+            throw new IllegalArgumentException("A data de aquisição deve ser hoje ou uma data anterior.");
         }
 
         if (entity.getTitulo().getId() == null) {

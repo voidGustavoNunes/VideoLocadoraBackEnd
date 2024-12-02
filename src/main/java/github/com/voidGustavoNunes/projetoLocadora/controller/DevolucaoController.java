@@ -1,6 +1,8 @@
 package github.com.voidGustavoNunes.projetoLocadora.controller;
 
 import github.com.voidGustavoNunes.projetoLocadora.model.Locacao;
+import github.com.voidGustavoNunes.projetoLocadora.model.dto.LocacaoDTO;
+import github.com.voidGustavoNunes.projetoLocadora.model.dto.LocacaoDtoDevolucao;
 import github.com.voidGustavoNunes.projetoLocadora.service.DevolucaoService;
 import github.com.voidGustavoNunes.projetoLocadora.service.LocacaoService;
 
@@ -23,7 +25,7 @@ public class DevolucaoController {
 
     // Endpoint para buscar locação com base no número de série do item
     @GetMapping("/locacao")
-    public ResponseEntity<?> buscarLocacao(@RequestParam String numeroSerie) {
+    public ResponseEntity<?> buscarLocacao(@RequestParam Integer numeroSerie) {
         Locacao locacao = locacaoService.buscarLocacaoPorNumeroSerie(numeroSerie);
         if (locacao == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não está locado.");
@@ -31,15 +33,28 @@ public class DevolucaoController {
 
         // Calcular multa, se houver (não é necessário no método de busca)
         BigDecimal multa = devolucaoService.calcularMulta(locacao);
-        
-        // Retorna a locação com a multa calculada, se houver
         locacao.setValor(locacao.getValor().add(multa)); // Se houver multa, soma ao valor
-        return ResponseEntity.ok(locacao);
+
+        // Cria o DTO e preenche os dados
+        LocacaoDtoDevolucao locacaoDTO = new LocacaoDtoDevolucao();
+        locacaoDTO.setMulta(BigDecimal.ZERO); //inicializa como 0 para ter um valor default
+
+        locacaoDTO.setId(locacao.getId());
+        locacaoDTO.setCliente(locacao.getCliente());
+        locacaoDTO.setItem(locacao.getItem());
+        locacaoDTO.setDataLocacao(locacao.getDataLocacao());
+        locacaoDTO.setDataDevolucaoPrevista(locacao.getDataDevolucaoPrevista());
+        locacaoDTO.setDataDevolucaoEfetiva(locacao.getDataDevolucaoEfetiva());
+        locacaoDTO.setValor(locacao.getValor());
+        locacaoDTO.setStatus(locacao.getStatus());
+        locacaoDTO.setMulta(multa);
+        
+        return ResponseEntity.ok(locacaoDTO);
     }
 
     // Endpoint para efetuar a devolução do item
     @PostMapping("/efetuar")
-    public ResponseEntity<?> efetuarDevolucao(@RequestBody String numeroSerie) {
+    public ResponseEntity<?> efetuarDevolucao(@RequestParam Integer numeroSerie) {
         Locacao locacao = locacaoService.buscarLocacaoPorNumeroSerie(numeroSerie);
         if (locacao == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não está locado.");

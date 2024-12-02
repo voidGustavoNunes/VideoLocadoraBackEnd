@@ -36,7 +36,7 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 
     Optional<Locacao> findByItemIdAndStatus(Long itemId, StatusLocacao status);
 
-    Locacao findByItemNumeroSerie(String numeroSerie);
+    Locacao findByItemNumeroSerie(Integer numeroSerie);
 
 
 }

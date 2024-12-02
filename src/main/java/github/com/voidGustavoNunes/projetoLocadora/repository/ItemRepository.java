@@ -20,7 +20,7 @@ public interface ItemRepository extends JpaRepository<Item, Long>{
     
     List<Item> findAll();
     boolean existsByTitulo(Titulo titulo);
-    Optional<Item> findByNumeroSerie(String numeroSerie);
+    Optional<Item> findByNumeroSerie(Integer numeroSerie);
     List<Item> findByTitulo(Titulo titulo);
 
 }

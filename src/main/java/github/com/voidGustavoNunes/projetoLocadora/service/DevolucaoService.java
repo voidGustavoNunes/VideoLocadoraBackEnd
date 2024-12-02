@@ -29,7 +29,7 @@ public class DevolucaoService {
      * @param numeroSerie Número de série do item sendo devolvido.
      * @return Locação atualizada com as informações da devolução.
      */
-    public Locacao efetuarDevolucao(String numeroSerie) {
+    public Locacao efetuarDevolucao(Integer numeroSerie) {
         // Busca o item pelo número de série
         Item item = itemRepository.findByNumeroSerie(numeroSerie)
                 .orElseThrow(() -> new RegistroNotFoundException("Item não encontrado com o número de série: " + numeroSerie));
