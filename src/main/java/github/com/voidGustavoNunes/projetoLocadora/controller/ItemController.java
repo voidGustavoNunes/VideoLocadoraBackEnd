@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import github.com.voidGustavoNunes.projetoLocadora.model.Classe;
 import github.com.voidGustavoNunes.projetoLocadora.model.Cliente;
 import github.com.voidGustavoNunes.projetoLocadora.model.Item;
 import github.com.voidGustavoNunes.projetoLocadora.model.Titulo;
@@ -96,5 +97,23 @@ public class ItemController {
     @GetMapping("/itens")
     public List<Item> getItens() {
         return itemService.getAllItems();
+    }
+
+    // Endpoint para obter o título associado a um item pelo ID do título
+    @GetMapping("/{id}/titulo")
+    public Titulo getTituloByItemId(@PathVariable Long id) {
+        return itemService.getTituloByItemId(id);
+    }
+
+    // Endpoint para obter a classe associada ao título pelo ID da classe
+    @GetMapping("/titulos/{id}/classe")
+    public Classe getClasseByTituloId(@PathVariable Long id) {
+        return itemService.getClasseByTituloId(id);
+    }
+
+    // Endpoint para obter a classe associada a um item diretamente
+    @GetMapping("/{id}/classe")
+    public Classe getClasseByItemId(@PathVariable Long id) {
+        return itemService.getClasseByItemId(id);
     }
 }

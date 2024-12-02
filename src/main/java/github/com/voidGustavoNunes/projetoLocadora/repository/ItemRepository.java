@@ -8,8 +8,8 @@ import github.com.voidGustavoNunes.projetoLocadora.model.Item;
 import github.com.voidGustavoNunes.projetoLocadora.model.Titulo;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
@@ -20,4 +20,7 @@ public interface ItemRepository extends JpaRepository<Item, Long>{
     
     List<Item> findAll();
     boolean existsByTitulo(Titulo titulo);
+    Optional<Item> findByNumeroSerie(String numeroSerie);
+    List<Item> findByTitulo(Titulo titulo);
+
 }

@@ -8,10 +8,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import github.com.voidGustavoNunes.exception.RegistroNotFoundException;
+import github.com.voidGustavoNunes.projetoLocadora.model.Classe;
 import github.com.voidGustavoNunes.projetoLocadora.model.Cliente;
 import github.com.voidGustavoNunes.projetoLocadora.model.Item;
 import github.com.voidGustavoNunes.projetoLocadora.model.Titulo;
 import github.com.voidGustavoNunes.projetoLocadora.model.dto.ItemDTO;
+import github.com.voidGustavoNunes.projetoLocadora.repository.ClasseRepository;
 import github.com.voidGustavoNunes.projetoLocadora.repository.ItemRepository;
 import github.com.voidGustavoNunes.projetoLocadora.repository.TituloRepository;
 
@@ -20,6 +22,9 @@ public class ItemService extends GenericServiceImpl<Item, ItemRepository>{
 
     @Autowired
     private TituloRepository tituloRepository;
+    
+    @Autowired
+    private ClasseRepository classeRepository;
 
     protected ItemService(ItemRepository repository) {
             
@@ -59,6 +64,29 @@ public class ItemService extends GenericServiceImpl<Item, ItemRepository>{
 
     public List<Item> getAllItensOrdenados() {
         return repository.findAll(Sort.by(Sort.Direction.ASC, "titulo.nome"));
+    }
+
+    // Método para obter o título associado a um item pelo ID do título
+    public Titulo getTituloByItemId(Long tituloId) {
+        return tituloRepository.findById(tituloId)
+                .orElseThrow(() -> new RegistroNotFoundException(tituloId));
+    }
+
+    // Método para obter a classe associada ao título pelo ID da classe
+    public Classe getClasseByTituloId(Long classeId) {
+        return classeRepository.findById(classeId)
+                .orElseThrow(() -> new RegistroNotFoundException(classeId));
+    }
+
+    // Método para obter a classe associada a um item diretamente
+    public Classe getClasseByItemId(Long itemId) {
+        Item item = repository.findById(itemId)
+                .orElseThrow(() -> new RegistroNotFoundException(itemId));
+        Titulo titulo = item.getTitulo();
+        if (titulo.getClasse() == null) {
+            throw new RegistroNotFoundException(item.getId());
+        }
+        return titulo.getClasse();
     }
     
 }

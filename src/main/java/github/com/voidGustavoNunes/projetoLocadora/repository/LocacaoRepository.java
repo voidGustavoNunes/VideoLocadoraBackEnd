@@ -34,4 +34,9 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
     @Query("SELECT COUNT(l) = 0 FROM Locacao l WHERE l.item.id = :itemId AND l.status = 'EM_ABERTO' AND l.dataDevolucaoPrevista >= :dataAtual")
     boolean itemDisponivel(@Param("itemId") Long itemId, @Param("dataAtual") LocalDate dataAtual);
 
+    Optional<Locacao> findByItemIdAndStatus(Long itemId, StatusLocacao status);
+
+    Locacao findByItemNumeroSerie(String numeroSerie);
+
+
 }
