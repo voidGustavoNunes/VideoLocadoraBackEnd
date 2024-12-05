@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import github.com.voidGustavoNunes.exception.RegistroNotFoundException;
 import github.com.voidGustavoNunes.projetoLocadora.model.Classe;
-import github.com.voidGustavoNunes.projetoLocadora.model.Cliente;
 import github.com.voidGustavoNunes.projetoLocadora.model.Item;
 import github.com.voidGustavoNunes.projetoLocadora.model.Titulo;
 import github.com.voidGustavoNunes.projetoLocadora.model.dto.ItemDTO;

@@ -15,7 +15,6 @@ import github.com.voidGustavoNunes.projetoLocadora.model.Socio;
 import github.com.voidGustavoNunes.projetoLocadora.repository.DependenteRepository;
 import github.com.voidGustavoNunes.projetoLocadora.repository.LocacaoRepository;
 import github.com.voidGustavoNunes.projetoLocadora.repository.SocioRepository;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -54,8 +53,9 @@ public class SocioService extends GenericServiceImpl<Socio, SocioRepository>{
         // System.out.println("Validando o Sócio: " + socio);
         if (socio.getId() != null) {
             // Se o id não for nulo, estamos atualizando um registro existente
-            Socio existingSocio= repository.findById(socio.getId())
-                    .orElseThrow(() -> new RegistroNotFoundException(socio.getId()));
+            final Long socioId = socio.getId();
+            Socio existingSocio= repository.findById(socioId)
+                    .orElseThrow(() -> new RegistroNotFoundException(socioId));
             
             // Verifica se o nome está sendo alterado
             if (!existingSocio.getNome().equals(socio.getNome())) {
@@ -99,7 +99,7 @@ public class SocioService extends GenericServiceImpl<Socio, SocioRepository>{
             throw new IllegalArgumentException("CPF não pode ser vazio.");
         }
         if(socio.getId() != null && !socio.getDependentes().isEmpty()){
-            adicionarDependentes(socio.getId(), socio.getDependentes());
+            socio = adicionarDependentes(socio.getId(), socio.getDependentes());
         }
         
     }
@@ -113,7 +113,7 @@ public class SocioService extends GenericServiceImpl<Socio, SocioRepository>{
         }
     }
 
-    public void adicionarDependentes(@NotNull @Positive Long socioId, @Valid @NotNull List<Dependente> dependentes) {
+    public Socio adicionarDependentes(@NotNull @Positive Long socioId, @Valid @NotNull List<Dependente> dependentes) {
         Socio socio = repository.findById(socioId)
                 .orElseThrow(() -> new RegistroNotFoundException(socioId));
         
@@ -133,7 +133,6 @@ public class SocioService extends GenericServiceImpl<Socio, SocioRepository>{
             dependenteNovo.setNome(dependente.getNome());
             dependenteNovo.setDataNascimento(dependente.getDataNascimento());
             dependenteNovo.setSexo(dependente.getSexo());
-            
             dependenteNovo.setSocio(socio);
             dependenteNovo.setAtivo(true);
 
@@ -141,6 +140,8 @@ public class SocioService extends GenericServiceImpl<Socio, SocioRepository>{
         }
         socio.setDependentes(new ArrayList<>());
         socio.setDependentes(novosDependentes);
+
+        return socio;
 
         // // Use dependenteService to save each new dependent
         // for (Dependente dependente : novosDependentes) {
