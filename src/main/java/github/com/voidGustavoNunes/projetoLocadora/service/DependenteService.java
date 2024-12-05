@@ -3,7 +3,6 @@ package github.com.voidGustavoNunes.projetoLocadora.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +13,6 @@ import github.com.voidGustavoNunes.projetoLocadora.repository.DependenteReposito
 
 @Service
 public class DependenteService extends GenericServiceImpl<Dependente, DependenteRepository>{
-
-    @Autowired
-    private ClienteService clienteService;
-
 
     protected DependenteService(DependenteRepository repository) {
         super(repository);

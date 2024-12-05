@@ -29,8 +29,8 @@ public class Locacao {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
+    @JoinColumn(name = "socio_id", nullable = false)
+    private Socio socio;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)

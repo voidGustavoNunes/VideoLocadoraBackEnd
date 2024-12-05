@@ -13,7 +13,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="cliente")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Cliente {
+public abstract class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")

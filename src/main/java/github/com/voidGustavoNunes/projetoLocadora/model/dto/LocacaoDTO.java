@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class LocacaoDTO {
     @NotNull
-    private Long clienteId;
+    private Long socioId;
 
     @NotNull
     private Long itemId;

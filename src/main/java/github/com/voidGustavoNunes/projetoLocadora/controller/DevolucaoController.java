@@ -40,7 +40,7 @@ public class DevolucaoController {
         locacaoDTO.setMulta(BigDecimal.ZERO); //inicializa como 0 para ter um valor default
 
         locacaoDTO.setId(locacao.getId());
-        locacaoDTO.setCliente(locacao.getCliente());
+        locacaoDTO.setSocio(locacao.getSocio());
         locacaoDTO.setItem(locacao.getItem());
         locacaoDTO.setDataLocacao(locacao.getDataLocacao());
         locacaoDTO.setDataDevolucaoPrevista(locacao.getDataDevolucaoPrevista());

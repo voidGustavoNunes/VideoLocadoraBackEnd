@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 
 import github.com.voidGustavoNunes.exception.BusinessException;
 import github.com.voidGustavoNunes.exception.RegistroNotFoundException;
-import github.com.voidGustavoNunes.projetoLocadora.model.Cliente;
 import github.com.voidGustavoNunes.projetoLocadora.model.Item;
 import github.com.voidGustavoNunes.projetoLocadora.model.Locacao;
+import github.com.voidGustavoNunes.projetoLocadora.model.Socio;
 import github.com.voidGustavoNunes.projetoLocadora.model.dto.LocacaoDTO;
 import github.com.voidGustavoNunes.projetoLocadora.model.enums.StatusLocacao;
-import github.com.voidGustavoNunes.projetoLocadora.repository.ClienteRepository;
 import github.com.voidGustavoNunes.projetoLocadora.repository.ItemRepository;
 import github.com.voidGustavoNunes.projetoLocadora.repository.LocacaoRepository;
+import github.com.voidGustavoNunes.projetoLocadora.repository.SocioRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +25,7 @@ import jakarta.validation.constraints.NotNull;
 public class LocacaoService extends GenericServiceImpl<Locacao, LocacaoRepository> {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private SocioRepository socioRepository;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -39,8 +39,8 @@ public class LocacaoService extends GenericServiceImpl<Locacao, LocacaoRepositor
 
     @Override
     public void saveValidation(Locacao entity) throws RegistroNotFoundException {
-        if (repository.existsByClienteIdAndStatus(entity.getCliente().getId(), StatusLocacao.ABERTA)) {
-            throw new BusinessException(entity.getCliente().getId(), "Cliente possui locações em débito.");
+        if (repository.existsBySocioIdAndStatus(entity.getSocio().getId(), StatusLocacao.ABERTA)) {
+            throw new BusinessException(entity.getSocio().getId(), "Sócio possui locações em débito.");
         }
 
         if (repository.findByItemIdAndDataLocacao(entity.getItem().getId(), entity.getDataLocacao()).isPresent()) {
@@ -56,13 +56,13 @@ public class LocacaoService extends GenericServiceImpl<Locacao, LocacaoRepositor
 
     @Transactional
     public Locacao criar(@Valid @NotNull LocacaoDTO dto) {
-        // Valida e obtém cliente e item
-        var cliente = validarCliente(dto.getClienteId());
+        // Valida e obtém socio e item
+        var socio = validarSocio(dto.getSocioId());
         var item = validarItem(dto.getItemId());
 
         // Cria nova entidade Locacao com base no DTO
         Locacao locacao = new Locacao();
-        locacao.setCliente(cliente);
+        locacao.setSocio(socio);
         locacao.setItem(item);
         locacao.setDataLocacao(LocalDate.now());
         locacao.setDataDevolucaoPrevista(dto.getDataDevolucaoPrevista());
@@ -74,9 +74,9 @@ public class LocacaoService extends GenericServiceImpl<Locacao, LocacaoRepositor
         return repository.save(locacao);
     }
 
-    private Cliente validarCliente(Long clienteId) {
-        return clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new RegistroNotFoundException(clienteId));
+    private Socio validarSocio(Long socioId) {
+        return socioRepository.findById(socioId)
+                .orElseThrow(() -> new RegistroNotFoundException(socioId));
     }
 
     private Item validarItem(Long itemId) {
@@ -100,14 +100,14 @@ public class LocacaoService extends GenericServiceImpl<Locacao, LocacaoRepositor
         Locacao locacaoExistente = repository.findById(id)
             .orElseThrow(() -> new RegistroNotFoundException(id));
 
-        // Valida cliente
-        Cliente cliente = validarCliente(dto.getClienteId());
+        // Valida socio
+        Socio socio = validarSocio(dto.getSocioId());
 
         // Valida item
         Item item = validarItem(dto.getItemId());
 
         // Atualiza os campos permitidos
-        locacaoExistente.setCliente(cliente);
+        locacaoExistente.setSocio(socio);
         locacaoExistente.setItem(item);
         locacaoExistente.setDataDevolucaoPrevista(dto.getDataDevolucaoPrevista());
         locacaoExistente.setValor(dto.getValor());
@@ -115,4 +115,6 @@ public class LocacaoService extends GenericServiceImpl<Locacao, LocacaoRepositor
         // Mantém a data de locação e status inalterados
         return repository.save(locacaoExistente);
     }
+
+    
 }

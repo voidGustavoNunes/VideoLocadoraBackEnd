@@ -19,17 +19,17 @@ import github.com.voidGustavoNunes.projetoLocadora.model.enums.StatusLocacao;
 @RepositoryRestResource(collectionResourceRel = "locacao", path="locacoes", exported = false)
 public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 
-    boolean findByClienteId(Long id);
+    boolean findBySocioId(Long id);
 
     // Verifica se já existe uma locação para o item na data especificada
     Optional<Locacao> findByItemIdAndDataLocacao(Long itemId, LocalDate dataLocacao);
 
-    // Verifica se um cliente possui locações em aberto
-    boolean existsByClienteIdAndStatus(Long clienteId, StatusLocacao status);
+    // Verifica se um sócio possui locações em aberto
+    boolean existsBySocioIdAndStatus(Long clienteId, StatusLocacao status);
 
 
-    @Query("SELECT COUNT(l) > 0 FROM Locacao l WHERE l.cliente.id = :clienteId AND l.status = 'EM_ABERTO'")
-    boolean clientePossuiDebitos(@Param("clienteId") Long clienteId);
+    @Query("SELECT COUNT(l) > 0 FROM Locacao l WHERE l.socio.id = :socioId AND l.status = 'EM_ABERTO'")
+    boolean socioPossuiDebitos(@Param("socioId") Long socioId);
 
     @Query("SELECT COUNT(l) = 0 FROM Locacao l WHERE l.item.id = :itemId AND l.status = 'EM_ABERTO' AND l.dataDevolucaoPrevista >= :dataAtual")
     boolean itemDisponivel(@Param("itemId") Long itemId, @Param("dataAtual") LocalDate dataAtual);
