@@ -112,4 +112,16 @@ public class TituloService extends GenericServiceImpl<Titulo, TituloRepository>{
         return repository.save(entity);
     }
 
+    public List<Titulo> buscarPorNome(String nome) {
+        return repository.findByNomeContainingIgnoreCase(nome);
+    }
+
+    public List<Titulo> buscarPorCategoria(String categoria) {
+        return repository.findByCategoriaIgnoreCase(categoria);
+    }
+
+    public List<Titulo> buscarPorAtor(String nomeAtor) {
+        return repository.findByAtorNome(nomeAtor);
+    }
+
 }

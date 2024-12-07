@@ -3,9 +3,11 @@ package github.com.voidGustavoNunes.projetoLocadora.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import github.com.voidGustavoNunes.projetoLocadora.model.Titulo;
@@ -33,4 +35,27 @@ public class TituloController extends GenericController<Titulo>{
     public List<Titulo> getTitulosOrdenados() {
         return tituloService.getAllTitulosOrdenados();
     }
+
+    @GetMapping("/buscar")
+    @Operation(summary = "Buscar Titulos", description = "Método que busca títulos por nome, categoria ou ator")
+    public ResponseEntity<List<Titulo>> buscarTitulos(
+        @RequestParam(required = false) String nome,
+        @RequestParam(required = false) String categoria,
+        @RequestParam(required = false) String ator
+    ) {
+        List<Titulo> titulos;
+
+        if (nome != null && !nome.isEmpty()) {
+            titulos = tituloService.buscarPorNome(nome);
+        } else if (categoria != null && !categoria.isEmpty()) {
+            titulos = tituloService.buscarPorCategoria(categoria);
+        } else if (ator != null && !ator.isEmpty()) {
+            titulos = tituloService.buscarPorAtor(ator);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(titulos);
+    }
+    
 }

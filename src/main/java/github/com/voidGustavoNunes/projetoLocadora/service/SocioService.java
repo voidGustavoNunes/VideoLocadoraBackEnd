@@ -15,6 +15,7 @@ import github.com.voidGustavoNunes.exception.RegistroNotFoundException;
 import github.com.voidGustavoNunes.projetoLocadora.model.Dependente;
 import github.com.voidGustavoNunes.projetoLocadora.model.Locacao;
 import github.com.voidGustavoNunes.projetoLocadora.model.Socio;
+import github.com.voidGustavoNunes.projetoLocadora.model.Titulo;
 import github.com.voidGustavoNunes.projetoLocadora.repository.DependenteRepository;
 import github.com.voidGustavoNunes.projetoLocadora.repository.LocacaoRepository;
 import github.com.voidGustavoNunes.projetoLocadora.repository.SocioRepository;
@@ -208,5 +209,5 @@ public class SocioService extends GenericServiceImpl<Socio, SocioRepository>{
     //     return socio.getDependentes();
     // }
 
-    
+
 }
