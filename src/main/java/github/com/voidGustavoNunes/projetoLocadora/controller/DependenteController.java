@@ -33,4 +33,6 @@ public class DependenteController extends GenericController<Dependente>{
     public List<Dependente> getDependentesOrdenados() {
         return dependenteService.getAllDependentesOrdenados();
     }
+
+
 }

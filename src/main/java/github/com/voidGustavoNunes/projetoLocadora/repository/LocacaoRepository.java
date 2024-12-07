@@ -1,6 +1,7 @@
 package github.com.voidGustavoNunes.projetoLocadora.repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,7 +20,10 @@ import github.com.voidGustavoNunes.projetoLocadora.model.enums.StatusLocacao;
 @RepositoryRestResource(collectionResourceRel = "locacao", path="locacoes", exported = false)
 public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 
-    boolean findBySocioId(Long id);
+    List<Locacao> findBySocioId(Long id);
+
+    @Query("SELECT COUNT(l) > 0 FROM Locacao l WHERE l.socio.id = :id")
+    boolean existsBySocioId(@Param("id") Long id);
 
     // Verifica se já existe uma locação para o item na data especificada
     Optional<Locacao> findByItemIdAndDataLocacao(Long itemId, LocalDate dataLocacao);

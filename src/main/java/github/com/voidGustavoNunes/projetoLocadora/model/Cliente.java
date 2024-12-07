@@ -3,10 +3,19 @@ package github.com.voidGustavoNunes.projetoLocadora.model;
 import java.time.LocalDate;
 
 import github.com.voidGustavoNunes.projetoLocadora.model.enums.Sexo;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import jakarta.persistence.*;
 
 
 @Data
@@ -23,8 +32,6 @@ public abstract class Cliente {
     @Size(min = 1, max = 100)
     private String nome;
 
-    @NotNull(message = "O cpf é obrigatório.")
-    @Size(min = 11, max = 11, message = "O CPF deve ter 11 dígitos.")
     private String cpf;
 
     @NotNull(message = "O campo sexo não pode ser nulo.")
@@ -38,4 +45,6 @@ public abstract class Cliente {
     // private List<Dependente> dependentes;
 
     private boolean ativo;
+
+    private boolean ehDependente;
 }

@@ -20,6 +20,9 @@ public interface DependenteRepository extends JpaRepository<Dependente, Long>{
     List<Dependente> findAll(Sort sort);
     boolean existsByNome(String nome);
 
-    @Query("SELECT d FROM Dependente d WHERE d.socio.id = :socioId AND d.ativo = true")
+    @Query("SELECT d FROM Dependente d WHERE d.socioId = :socioId AND d.ativo = true")
     List<Dependente> findByIdWithActiveDependents(@Param("socioId") Long socioId);
+
+    List<Dependente> findBySocioId(Long socioId);
+
 }

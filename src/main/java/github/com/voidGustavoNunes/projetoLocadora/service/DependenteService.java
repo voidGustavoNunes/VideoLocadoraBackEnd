@@ -3,6 +3,7 @@ package github.com.voidGustavoNunes.projetoLocadora.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import github.com.voidGustavoNunes.exception.RegistroNotFoundException;
 import github.com.voidGustavoNunes.projetoLocadora.model.Dependente;
 import github.com.voidGustavoNunes.projetoLocadora.model.Socio;
 import github.com.voidGustavoNunes.projetoLocadora.repository.DependenteRepository;
+import github.com.voidGustavoNunes.projetoLocadora.repository.SocioRepository;
 
 @Service
 public class DependenteService extends GenericServiceImpl<Dependente, DependenteRepository>{
@@ -22,6 +24,9 @@ public class DependenteService extends GenericServiceImpl<Dependente, Dependente
         return repository.findAll(Sort.by(Sort.Direction.ASC, "nome"));
 
     }
+
+    @Autowired
+    private SocioRepository socioRepository;
 
     @Override
     public void saveValidation(Dependente entity) throws RegistroNotFoundException {
@@ -50,17 +55,22 @@ public class DependenteService extends GenericServiceImpl<Dependente, Dependente
             }
         }
         // Valida associação ao sócio
-        if (entity.getSocio() == null) {
+        if (entity.getId() == null) {
             throw new IllegalArgumentException("O dependente deve estar associado a um sócio.");
         }
-        validarInclusao(entity.getSocio());
+        validarInclusao(entity.getSocioId());
     }
 
-    public void validarInclusao(Socio socio) {
+    public void validarInclusao(Long socioId) {
+        Socio socio = socioRepository.findById(socioId)
+                .orElseThrow(() -> new RegistroNotFoundException(socioId));
+
         if (socio.getDependentes().size() >= 3) {
             throw new IllegalArgumentException("Sócio já possui três dependentes ativos.");
         }
     }
+
+    
 
     // @Transactional
     // public List<Dependente> criarDependentesParaCliente(@Valid List<Dependente> dependentes, Long clienteId) {

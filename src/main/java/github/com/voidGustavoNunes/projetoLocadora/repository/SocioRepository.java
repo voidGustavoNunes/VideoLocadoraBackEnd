@@ -17,4 +17,7 @@ public interface SocioRepository extends JpaRepository<Socio, Long> {
 
     List<Socio> findAll(Sort sort);
     boolean existsByNome(String nome);
+
+    
+
 }
