@@ -27,4 +27,9 @@ public interface TituloRepository extends JpaRepository<Titulo,Long>{
 
     @Query("SELECT t FROM Titulo t JOIN t.atores a WHERE a.nome = :nomeAtor")
     List<Titulo> findByAtorNome(@Param("nomeAtor") String nomeAtor);
+
+    @Query("SELECT t.id, t.nome, COUNT(i) AS quantidade FROM Titulo t " +
+       "LEFT JOIN Item i ON t.id = i.titulo.id " +
+       "GROUP BY t.id, t.nome")
+    List<Object[]> getTitulosComQuantidade();
 }

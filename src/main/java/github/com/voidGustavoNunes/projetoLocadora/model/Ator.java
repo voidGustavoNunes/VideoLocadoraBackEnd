@@ -33,5 +33,5 @@ public class Ator{
 
     @JsonIgnore
     @ManyToMany(mappedBy = "atores")
-    private List<Titulo> titulos = new ArrayList<>();;
+    private List<Titulo> titulos;
 }

@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -122,6 +124,17 @@ public class TituloService extends GenericServiceImpl<Titulo, TituloRepository>{
 
     public List<Titulo> buscarPorAtor(String nomeAtor) {
         return repository.findByAtorNome(nomeAtor);
+    }
+
+    public List<Map<String, Object>> listarTitulosComQuantidade() {
+    List<Object[]> resultados = repository.getTitulosComQuantidade();
+    return resultados.stream()
+            .map(obj -> Map.of(
+                "id", obj[0],
+                "nome", obj[1],
+                "quantidade", obj[2]
+            ))
+            .collect(Collectors.toList());
     }
 
 }

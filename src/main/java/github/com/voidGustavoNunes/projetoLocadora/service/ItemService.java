@@ -87,5 +87,10 @@ public class ItemService extends GenericServiceImpl<Item, ItemRepository>{
         }
         return titulo.getClasse();
     }
+
+
+    // public Long getItemCountByTituloId(Long tituloId) {
+    //     return repository.countItemsByTituloId(tituloId);
+    // }
     
 }

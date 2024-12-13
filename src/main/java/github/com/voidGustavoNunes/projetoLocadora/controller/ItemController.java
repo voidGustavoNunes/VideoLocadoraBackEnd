@@ -116,4 +116,9 @@ public class ItemController {
     public Classe getClasseByItemId(@PathVariable Long id) {
         return itemService.getClasseByItemId(id);
     }
+
+    // @GetMapping("/itens/count")
+    // public Long getItemCount(@RequestParam Long tituloId) {
+    //     return itemService.getItemCountByTituloId(tituloId);
+    // }
 }

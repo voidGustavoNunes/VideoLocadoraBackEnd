@@ -1,6 +1,7 @@
 package github.com.voidGustavoNunes.projetoLocadora.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,11 @@ public class TituloController extends GenericController<Titulo>{
         }
 
         return ResponseEntity.ok(titulos);
+    }
+
+    @GetMapping("/titulos-com-quantidade")
+    public List<Map<String, Object>> listarTitulosComQuantidade() {
+        return tituloService.listarTitulosComQuantidade();
     }
     
 }
