@@ -1,6 +1,7 @@
 package github.com.voidGustavoNunes.projetoLocadora.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import github.com.voidGustavoNunes.projetoLocadora.model.Ator;
 import github.com.voidGustavoNunes.projetoLocadora.model.Titulo;
 
 @Repository
@@ -32,4 +34,6 @@ public interface TituloRepository extends JpaRepository<Titulo,Long>{
        "LEFT JOIN Item i ON t.id = i.titulo.id " +
        "GROUP BY t.id, t.nome")
     List<Object[]> getTitulosComQuantidade();
+
+
 }
