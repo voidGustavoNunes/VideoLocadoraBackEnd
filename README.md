@@ -3,6 +3,7 @@
 
 ### README para o Repositório do **Backend**
 
+
 ```markdown
 # Locadora - Backend
 
@@ -63,3 +64,6 @@ A API REST do sistema de locadora de nome Passatempo onde fornece os endpoints n
    ```bash
    git clone https://github.com/seu-usuario/backend-locadora.git
    cd backend-locadora
+
+
+### O frontend está localizado na seguinte url: https://github.com/voidGustavoNunes/videoLocadoraPassatempoFrontend
