@@ -7,7 +7,7 @@
 ```markdown
 # Locadora - Backend
 
-Este repositório contém o código do backend do sistema de gerenciamento de locadora, desenvolvido com **Spring Boot**.
+Este repositório contém o código do backend do sistema de gerenciamento de locadora, desenvolvido com Spring Boot.
 
 ## Índice
 - [Visão Geral](#visão-geral)
