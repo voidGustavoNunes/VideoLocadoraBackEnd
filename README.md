@@ -16,7 +16,6 @@ Este repositório contém o código do backend do sistema de gerenciamento de lo
 - [Configuração do Ambiente](#configuração-do-ambiente)
 - [Como Executar](#como-executar)
 - [Estrutura do Projeto](#estrutura-do-projeto)
-- [Contribuição](#contribuição)
 - [Licença](#licença)
 
 ---
@@ -64,6 +63,31 @@ A API REST do sistema de locadora de nome Passatempo onde fornece os endpoints n
    ```bash
    git clone https://github.com/seu-usuario/backend-locadora.git
    cd backend-locadora
+
+## Como executar
+1. Após clonar o projeto, dê um mvn clean install no terminal para fazer o download das dependências,
+após isso, rode o projeto com mvn spring-boot:run.
+OBS: garanta que o banco de dados esteja criado com as informações que estão no aplication.proprieties.
+
+A API estará disponível em: http://localhost:8080.
+
+## Estrutura do Projeto
+
+O projeto está estruturado da seguinte forma:
+
+src/
+├── main/
+│   ├── java/com/locadora/
+│   │   ├── controller/   # Controladores REST
+│   │   ├── model/        # Modelos de dados
+│   │   ├── repository/   # Repositórios JPA
+│   │   ├── service/      # Regras de negócio
+│   │   └── LocadoraApplication.java
+│   └── resources/
+│       ├── application.properties
+
+## Licença
+Este projeto está licenciado sob a [GNU License](LICENSE). Consulte o arquivo LICENSE para mais detalhes.
 
 
 ### O frontend está localizado na seguinte url: https://github.com/voidGustavoNunes/videoLocadoraPassatempoFrontend
